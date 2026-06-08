@@ -26,6 +26,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         quarto_args: ["render thesis.ipynb", "render"]
+        exclude:
+          - os: ubuntu-latest
+            quarto_args: "render thesis.ipynb"
 
     steps:
       - name: Checkout repo
@@ -46,14 +49,7 @@ jobs:
         working-directory: test-project
         run: |
           echo $QUARTO_PYTHON
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            export NODE_OPTIONS="--no-sandbox --disable-setuid-sandbox"
-            export CHROME_BIN=/usr/bin/google-chrome
-            export PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage"
-            quarto ${{ matrix.quarto_args }}
-          else
-            quarto ${{ matrix.quarto_args }}
-          fi
+          quarto ${{ matrix.quarto_args }}
 
       - name: Rename PDF (platform-specific)
         run: | 
