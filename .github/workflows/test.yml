@@ -47,8 +47,10 @@ jobs:
         run: |
           echo $QUARTO_PYTHON
           if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            # Use virtual framebuffer for headless Linux to make Mermaid work
-            xvfb-run -a quarto ${{ matrix.quarto_args }}
+            export NODE_OPTIONS="--no-sandbox --disable-setuid-sandbox"
+            export CHROME_BIN=/usr/bin/google-chrome
+            export PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage"
+            quarto ${{ matrix.quarto_args }}
           else
             quarto ${{ matrix.quarto_args }}
           fi
