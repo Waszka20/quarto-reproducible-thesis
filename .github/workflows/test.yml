@@ -46,7 +46,12 @@ jobs:
         working-directory: test-project
         run: |
           echo $QUARTO_PYTHON
-          quarto ${{ matrix.quarto_args }} --log-level debug
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            # Use virtual framebuffer for headless Linux to make Mermaid work
+            xvfb-run -a quarto ${{ matrix.quarto_args }}
+          else
+            quarto ${{ matrix.quarto_args }}
+          fi
 
       - name: Rename PDF (platform-specific)
         run: | 
