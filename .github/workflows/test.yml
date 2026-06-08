@@ -46,7 +46,7 @@ jobs:
         working-directory: test-project
         run: |
           echo $QUARTO_PYTHON
-          quarto ${{ matrix.quarto_args }}
+          quarto ${{ matrix.quarto_args }} --log-level debug
 
       - name: Rename PDF (platform-specific)
         run: | 
