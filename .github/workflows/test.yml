@@ -26,9 +26,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         quarto_args: ["render thesis.ipynb", "render"]
-        exclude:
-          - os: ubuntu-latest
-            quarto_args: "render thesis.ipynb"
 
     steps:
       - name: Checkout repo
